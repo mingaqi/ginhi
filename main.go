@@ -10,7 +10,7 @@ import (
 func main() {
 
 	// 日志
-	logs.InitLogs("./logs/ginhi.log")
+	logs.InitLogs("./logs/ginhi%s.log")
 
 	// 路由
 	router := initRouter.InitRouter()

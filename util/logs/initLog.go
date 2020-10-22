@@ -38,8 +38,8 @@ func InitLogs(path string) {
 				`WithRotationSize` 设置文件大小切分单位byte
 		*/
 		writer, _ := rotatelogs.New(
-			path+"%Y%m%d",
-			rotatelogs.WithLinkName(path),
+			fmt.Sprintf(path, "."+"%Y%m%d"),
+			rotatelogs.WithLinkName(fmt.Sprintf(path, "")),
 			rotatelogs.WithMaxAge(15*24*time.Hour),
 			rotatelogs.WithRotationTime(24*time.Hour),
 			rotatelogs.WithRotationSize(200*1000*1000),
@@ -53,7 +53,7 @@ func InitLogs(path string) {
 type LogFormatter struct{}
 
 func (s *LogFormatter) Format(entry *logrus.Entry) ([]byte, error) {
-	timestamp := time.Now().Local().Format("2006-01-02|15:04:05.000")
+	timestamp := time.Now().Local().Format("[2006-01-02|15:04:05.000]")
 	var file string
 	var l int
 	if entry.Caller != nil {

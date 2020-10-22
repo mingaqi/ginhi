@@ -4,7 +4,6 @@
 [gin中文文档](https://www.kancloud.cn/shuangdeyu/gin_book/949411)
 [多框架文档, 算法](http://topgoer.com)
 
-直接run 由于在临时目录生成可执行文件导致静态资源找不到, 所以先打包后执行
 
 # gin路由
 
@@ -32,7 +31,7 @@ gin框架涉及中间件相关有4个常用的方法，它们分别是c.Next()�
 
 
 ## viper
-[viper-toml](http://www.fecmall.com/topic/1519) 已经添加印象笔记 
+[viper-toml](http://www.fecmall.com/topic/1519) 大象
 
 [viper-toml](https://blog.csdn.net/linux_player_c/article/details/82118837)
 

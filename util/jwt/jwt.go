@@ -6,6 +6,8 @@ import (
 	"time"
 )
 
+var Jwt *JWT
+
 // JWT签名结构
 type JWT struct {
 	SigningKey []byte
@@ -39,8 +41,8 @@ func GetSignKey() string {
 }
 
 // 生成SignKey
-func NewJwt() *JWT {
-	return &JWT{[]byte(GetSignKey())}
+func init() {
+	Jwt = &JWT{[]byte(GetSignKey())}
 }
 
 // 创建token
@@ -75,18 +77,6 @@ func (j *JWT) ParseToken(tokenString string) (*Customclaims, error) {
 	return nil, TokenInvalid
 }
 
-// 生成rmt自有token
-func (j *JWT) GenerateToken(user string) (string, error) {
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"iat":     time.Now().Unix(),                     // Token颁发时间
-		"nbf":     time.Now().Unix(),                     // Token生效时间
-		"exp":     time.Now().Add(time.Hour * 12).Unix(), // Token过期时间
-		"iss":     "stgz",                                // 颁发者
-		"userkey": user,
-	})
-	return token.SignedString(j.SigningKey)
-}
-
 // 更新token
 func (j *JWT) RefreshToken(tokenString string) (string, error) {
 	jwt.TimeFunc = func() time.Time {
@@ -104,4 +94,31 @@ func (j *JWT) RefreshToken(tokenString string) (string, error) {
 		return j.CreateToken(*claims)
 	}
 	return "", TokenInvalid
+}
+
+// 生成rmt自有token
+func (j *JWT) GenerateToken(user string) (string, error) {
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"iat":     time.Now().Unix(),                     // Token颁发时间
+		"nbf":     time.Now().Unix(),                     // Token生效时间
+		"exp":     time.Now().Add(time.Hour * 12).Unix(), // Token过期时间
+		"iss":     "stgz",                                // 颁发者
+		"userkey": user,
+	})
+	return token.SignedString(j.SigningKey)
+}
+
+//  解析rmt生成的token
+func (j *JWT) ParseTokenFM(token string) (*jwt.MapClaims, error) {
+
+	tokenClaims, err := jwt.ParseWithClaims(token, &jwt.MapClaims{}, func(token *jwt.Token) (interface{}, error) {
+		return j.SigningKey, nil
+	})
+
+	if tokenClaims != nil {
+		if claims, ok := tokenClaims.Claims.(*jwt.MapClaims); ok && tokenClaims.Valid {
+			return claims, nil
+		}
+	}
+	return nil, err
 }

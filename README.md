@@ -33,7 +33,7 @@ gin框架涉及中间件相关有4个常用的方法，它们分别是c.Next()�
 ## viper
 [viper-toml](http://www.fecmall.com/topic/1519) 大象
 
-[viper-toml](https://blog.csdn.net/linux_player_c/article/details/82118837)
+[toml-toml](https://blog.csdn.net/linux_player_c/article/details/82118837)
 
 [viper git](https://github.com/spf13/viper)
 

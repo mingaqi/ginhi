@@ -2,8 +2,8 @@ package config
 
 import (
 	"flag"
+	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
-	"log"
 	"os"
 	"sync"
 )
@@ -26,7 +26,7 @@ func GetViper() *viper.Viper {
 		v.SetConfigFile(filePath)
 		if err := v.ReadInConfig(); err != nil {
 			if _, ok := err.(viper.ConfigFileNotFoundError); ok {
-				log.Fatal("配置文件未找到")
+				logrus.Fatal("配置文件未找到")
 				os.Exit(1)
 			}
 		}
@@ -42,8 +42,12 @@ func GetViper() *viper.Viper {
 			v.SetConfigFile("config/config-prod.toml")
 			v.ReadInConfig()
 		}
-
 	})
-
+	/*var c server
+	err := v.UnmarshalKey("server", &c)*/
 	return v
+}
+
+type server struct {
+	Port int
 }

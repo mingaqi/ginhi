@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-var Jwt *JWT
+var J *JWT
 
 // JWT签名结构
 type JWT struct {
@@ -41,8 +41,12 @@ func GetSignKey() string {
 }
 
 // 生成SignKey
+func NewJwt() *JWT {
+	return &JWT{[]byte(GetSignKey())}
+}
+
 func init() {
-	Jwt = &JWT{[]byte(GetSignKey())}
+	J = NewJwt()
 }
 
 // 创建token

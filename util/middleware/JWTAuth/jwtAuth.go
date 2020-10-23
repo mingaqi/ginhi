@@ -21,7 +21,7 @@ func JWTAuth() gin.HandlerFunc {
 		logging.Info("get token: ", token)
 
 		// 解析token信息
-		claims, err := jwt.Jwt.ParseToken(token)
+		claims, err := jwt.J.ParseToken(token)
 		if err != nil {
 			if err == jwt.TokenExpired {
 				c.JSON(200, gin.H{

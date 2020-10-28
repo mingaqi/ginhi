@@ -16,13 +16,13 @@ var (
 func GetViper() *viper.Viper {
 	once.Do(func() {
 		var filePath string
-		flag.StringVar(&filePath, "config", "config/config.toml", "指定配置文件的路径")
+		flag.StringVar(&filePath, "config", "config/config.yaml", "指定配置文件的路径")
 		// 解析配置文件
 		flag.Parse()
 
 		v = viper.GetViper()
 		v.SetConfigName("config")
-		v.SetConfigType("toml")
+		v.SetConfigType("yaml")
 		v.SetConfigFile(filePath)
 		if err := v.ReadInConfig(); err != nil {
 			if _, ok := err.(viper.ConfigFileNotFoundError); ok {
@@ -30,24 +30,28 @@ func GetViper() *viper.Viper {
 				os.Exit(1)
 			}
 		}
-		if v.GetString("mode") == "dev" {
-			v.SetConfigFile("config/config-dev.toml")
-			v.ReadInConfig()
+		switch v.GetString("mode") {
+		case "dev":
+			v.SetConfigFile("config/config-dev.yaml")
+		case "test":
+			v.SetConfigFile("config/config-test.yaml")
+		case "prod":
+			v.SetConfigFile("config/config-prod.yaml")
+		default:
+			logrus.Fatal("配置文件未找到")
+
 		}
-		if v.GetString("mode") == "test" {
-			v.SetConfigFile("config/config-test.toml")
-			v.ReadInConfig()
-		}
-		if v.GetString("mode") == "prod" {
-			v.SetConfigFile("config/config-prod.toml")
-			v.ReadInConfig()
+		err := v.ReadInConfig()
+		if err != nil {
+			logrus.Fatal("配置文件读取出错")
 		}
 	})
-	/*var c server
-	err := v.UnmarshalKey("server", &c)*/
 	return v
 }
 
-type server struct {
-	Port int
+func GetInt(tag string) int {
+	return v.GetInt(tag)
+}
+func GetString(tag string) string {
+	return v.GetString(tag)
 }

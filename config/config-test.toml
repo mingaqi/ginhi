@@ -1,8 +1,0 @@
-[server]
-port = 8080
-debug = true
-http_timeout = 20000
-jwt_timeout = 8640000
-order_timeout = 600
-[server.a]
-a = 11

@@ -1,0 +1,4 @@
+mode: "dev"
+server:
+  port: "8090"
+

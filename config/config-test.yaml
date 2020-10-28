@@ -1,0 +1,4 @@
+mode: "test"
+server:
+  port: "9093"
+

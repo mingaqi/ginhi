@@ -1,0 +1,5 @@
+mode: "prod"
+server:
+  port: "9093"
+
+

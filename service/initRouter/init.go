@@ -40,6 +40,8 @@ func setHandler(router *gin.Engine) {
 		vv.GET("/user", handle.UserSaveByQuery)
 		vv.POST("/user/register", handle.UserRegister)
 	}
+	// 重定向
+	router.GET("/redirect", handle.Redirect)
 	router.POST("/jsontest", handle.JsonTest)
 
 }

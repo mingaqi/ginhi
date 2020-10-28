@@ -1,7 +1,11 @@
 package test
 
-import "testing"
+import (
+	"fmt"
+	"ginhi/util/snowFlake"
+	"testing"
+)
 
-func TestTime(t *testing.T) {
-
+func TestSnow(t *testing.T) {
+	fmt.Println(snowFlake.GetId())
 }

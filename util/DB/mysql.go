@@ -48,7 +48,7 @@ func (p *Mysql) NewConn() (*gorm.DB, error) {
 	// 初始化DB
 	db, err := gorm.Open(
 		mysql.New(mysql.Config{
-			Conn: sqlDB,
+			Conn: sqlDB, // 使用原生sql连接池
 		}),
 		&gorm.Config{
 			Logger: gormLog,

@@ -57,3 +57,7 @@ func JsonTest(c *gin.Context) {
 		"data": params,
 	})
 }
+
+func Redirect(c *gin.Context) {
+	c.Redirect(http.StatusFound, "http://www.baidu.com")
+}

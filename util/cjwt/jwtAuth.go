@@ -1,11 +1,10 @@
-package JWTAuth
+package cjwt
 
 import (
-	jwt "ginhi/util/cjwt"
 	"github.com/gin-gonic/gin"
-	logging "github.com/sirupsen/logrus"
 )
 
+//  token认证
 func JWTAuth() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		token := c.Request.Header.Get("token") // 将token放入header中进行接收
@@ -18,12 +17,11 @@ func JWTAuth() gin.HandlerFunc {
 			c.Abort()
 			return
 		}
-		logging.Info("get token: ", token)
 
 		// 解析token信息
-		claims, err := jwt.J.ParseToken(token)
+		claims, err := ParseToken(token)
 		if err != nil {
-			if err == jwt.TokenExpired {
+			if err == TokenExpired {
 				c.JSON(200, gin.H{
 					"code":   400,
 					"status": -1,
@@ -37,8 +35,8 @@ func JWTAuth() gin.HandlerFunc {
 				"status": -1,
 				"msg":    err.Error(),
 			})
+			return
 		}
-		//将解析的消息交给下一个路由处理
 		c.Set("claims", claims)
 		c.Next()
 	}

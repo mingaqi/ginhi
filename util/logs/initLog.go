@@ -42,7 +42,7 @@ func InitLogs(path string) {
 			rotatelogs.WithLinkName(fmt.Sprintf(path, "")),
 			rotatelogs.WithMaxAge(15*24*time.Hour),
 			rotatelogs.WithRotationTime(24*time.Hour),
-			rotatelogs.WithRotationSize(200*1000*1000),
+			rotatelogs.WithRotationSize(200*1000*1000), //200M
 		)
 		logrus.SetOutput(io.MultiWriter(os.Stdout, writer)) // 控制台和文件打印
 

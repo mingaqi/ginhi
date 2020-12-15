@@ -12,9 +12,6 @@ import (
 
 type Option func(engine *gin.Engine)
 
-/*
-   根据实际的业务将路由拆分到不同的文件或者包中
-*/
 func InitRouter() *gin.Engine {
 	gin.SetMode(gin.DebugMode)
 	gin.DefaultWriter = logrus.StandardLogger().Out

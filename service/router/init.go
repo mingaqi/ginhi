@@ -1,8 +1,8 @@
-package initRouter
+package router
 
 import (
 	_ "ginhi/docs"
-	"ginhi/service/initRouter/handle"
+	"ginhi/service/router/handle"
 	middle "ginhi/util/middleware/Cors"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"

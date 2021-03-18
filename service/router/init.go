@@ -3,6 +3,7 @@ package router
 import (
 	_ "ginhi/docs"
 	"ginhi/service/router/handle"
+	"ginhi/service/router/reverse"
 	middle "ginhi/util/middleware/Cors"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
@@ -40,5 +41,8 @@ func setHandler(router *gin.Engine) {
 	// 重定向
 	router.GET("/redirect", handle.Redirect)
 	router.POST("/jsontest", handle.JsonTest)
+
+	// gin反向代理
+	router.GET("/reverseProxy", reverse.ReverseProxy)
 
 }

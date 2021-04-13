@@ -7,7 +7,7 @@ import (
 	"net/url"
 )
 
-// 反向代理本地
+// 反向代理本地 反向
 func ReverseProxy(c *gin.Context) {
 	target := "localhost:8090"
 
